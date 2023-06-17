@@ -58,9 +58,7 @@ export class EstudiantesComponent {
   }
 
   openNewForm(){
-    const dialogRef = this.dialog.open(NewEstudianteComponent, {
-      width: '400px'
-    });
+    const dialogRef = this.dialog.open(NewEstudianteComponent);
     dialogRef.afterClosed().subscribe(result => {
       if(result.data != undefined){
         this.estudiantes.push(result.data)

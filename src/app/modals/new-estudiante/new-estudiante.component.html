@@ -1,6 +1,6 @@
 <div class="container">
-    <div>
-      <h1>Nuevo Estudiante</h1> 
+    <div [hidden]="isSubmitted">
+      <h1>Nuevo Estudiante</h1>   
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
       
          <mat-form-field appearance="fill" class="full-width">
@@ -10,6 +10,7 @@
               Este campo es <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>
+          <br>
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Celular</mat-label>
             <input type="number" required matInput formControlName="celular">
@@ -17,7 +18,8 @@
               Este campo es <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>
-          <mat-form-field>
+          <br>
+          <mat-form-field appearance="fill" class="full-width">
             <mat-label>Fecha de Nacimiento</mat-label>
             <input matInput required [matDatepicker]="picker" formControlName="fecha">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -26,47 +28,7 @@
                 Este campo es <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>
-          
-<!--
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Fecha de Nacimiento</mat-label>
-            <input required matInput formControlName="fecha">
-            <mat-error class="error" *ngIf="isSubmitted && myForm.get('fecha')!.invalid">
-              Este campo es <strong>obligatorio</strong>
-            </mat-error>
-          </mat-form-field>
-
-          -->
-          <br>
-      <!--<div>
-        
-        <label>
-          Sigla:
-          <input formControlName="sigla" placeholder="Sigla">
-        </label>
-        <div *ngIf="myForm.get('sigla')!.invalid && (myForm.get('sigla')!.dirty || myForm.get('sigla')!.touched)">
-          Este campo es obligatorio.
-        </div>
-      </div>
-      <div>
-        <label>
-          Nombre de la materia:
-          <input formControlName="nombre" placeholder="materia">
-        </label>
-        <div *ngIf="myForm.get('nombre')!.invalid && (myForm.get('nombre')!.dirty || myForm.get('nombre')!.touched)">
-          Este campo es obligatorio.
-        </div>
-      </div>
-      
-      <div>
-          <label>
-            Departamento:
-            <input formControlName="descripcion" placeholder="descripcion">
-          </label>
-          <div *ngIf="myForm.get('descripcion')!.invalid && (myForm.get('descripcion')!.dirty || myForm.get('descripcion')!.touched)">
-              Este campo es obligatorio.
-            </div>
-        </div>-->
-      <button mat-raised-button color="primary" type="submit" >Send</button>
+          <button mat-raised-button color="primary" type="submit" class="margin">Guardar</button>  
+      <!--<button mat-raised-button color="primary" type="submit" >Send</button>-->
     </form>
   </div>

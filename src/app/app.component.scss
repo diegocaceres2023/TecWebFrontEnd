@@ -8,6 +8,17 @@
     left: 0;
     right: 0;
   } 
+  .item-menu{
+      display: flex;  
+      flex-direction: row;
+  }
+  .item-menu mat-icon{
+    margin-right: 3%;
+    width: 30px;
+  }
+  .item-menu span{
+    text-align: left;
+  }
   .example-toolbar {
     background-color: #03346b;
     overflow: hidden;

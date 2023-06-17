@@ -5,9 +5,13 @@ import { EstudiantesComponent } from './paginas/estudiantes/estudiantes.componen
 import { NotasComponent } from './paginas/notas/notas.component';
 import { InscribirComponent } from './paginas/inscribir/inscribir.component';
 import { InscritosComponent } from './paginas/inscritos/inscritos.component';
+import { NewEstudianteComponent } from './modals/new-estudiante/new-estudiante.component';
+import { NewMateriaComponent } from './modals/new-materia/new-materia.component';
 
 const routes: Routes = [{ path: 'materias', component: MateriasComponent }, 
+          { path: 'materiaNueva', component: NewMateriaComponent },
           {path: 'estudiantes', component: EstudiantesComponent },
+          {path: 'estudianteNuevo', component: NewEstudianteComponent},
           {path: 'notas/:id', component: NotasComponent },
           { path: 'inscribir', component: InscribirComponent },
           {path: 'inscritos/:sigla/:nombre', component: InscritosComponent },];

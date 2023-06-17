@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { queue } from 'rxjs';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { NavItem } from './nav-item';
+import { NewEstudianteComponent } from './modals/new-estudiante/new-estudiante.component';
+import { NewMateriaComponent } from './modals/new-materia/new-materia.component';
 
 @Component({
   selector: 'app-root',
@@ -24,17 +26,47 @@ export class AppComponent {
     {
       displayName: 'Materias',
       iconName: 'menu_book',
-      route: '/materias',
+      children: [
+        {
+          displayName: 'Ver Materias',
+          iconName: 'search',
+          route: '/materias'
+        },
+        { 
+          displayName: 'Nueva Materia',
+          iconName: 'add_circle',
+          route: 'materia'
+        }
+      ]
+      //route: '/materias',
     },
     {
       displayName: 'Estudiantes',
       iconName: 'person',
-      route: '/estudiantes',
+      children: [
+        {
+          displayName: 'Ver Estudiantes',
+          iconName: 'search',
+          route: '/estudiantes'
+        },
+        { 
+          displayName: 'Nuevo Estudiante',
+          iconName: 'add_circle',
+          route: 'estudiante'
+        }
+      ]
+      //route: '/estudiantes',
     },
     {
       displayName: 'Inscripcion',
       iconName: 'folder',
-      route: '/inscribir',
+      children: [
+        {
+          displayName: 'Nueva Inscripción',
+          iconName: 'add_circle',
+          route: '/inscribir'
+        }
+      ]
     },
     
     /*{
@@ -85,6 +117,22 @@ export class AppComponent {
   select(index: number) {
     this.selectedIndex = index; 
   }  
+
+  isModal(route: string){
+    return !route.includes("/") ;
+  }
+  openModal(name: string){
+    if(name === "estudiante"){
+      const dialogRef = this.dialog.open(NewEstudianteComponent, {
+        width: '400px'
+      });
+    }
+    else if(name === "materia"){
+      const dialogRef = this.dialog.open(NewMateriaComponent, {
+        width: '400px'
+      });
+    }
+  }
   ngOnInit(): void {
     //this.requestPermission();
     //this.listen();

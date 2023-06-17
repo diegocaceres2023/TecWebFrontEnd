@@ -16,6 +16,7 @@
 }
 .materia-card{
     flex-basis: 30%;
+    //flex-grow: 2;
     margin: 10px 15px;
     justify-self: flex-start;
     //idth: 30%;
@@ -32,3 +33,15 @@ mat-card-content{
     width: 100%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
     height: 100%;
 }
+
+@media (max-width: 920px) {
+    .materia-card {
+      flex-basis: 45%; /* Set each item to occupy 50% of the available space */
+    }
+  }
+
+  @media (max-width: 620px) {
+    .materia-card {
+      flex-basis: 85%; /* Set each item to occupy 100% of the available space */
+    }
+  }
