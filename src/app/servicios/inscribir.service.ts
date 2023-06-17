@@ -19,7 +19,7 @@ export class InscribirService {
     obtenerDatos(){
       return this.http.get<Inscrito[]>(this.url);
     }*/
-    url = 'https://tec-web-backend.vercel.app/inscripciones'
+    url = 'http://localhost:3000/inscripciones'
     obtenerDatos(idMateria:string){
       let url = this.url + "/materia/" + idMateria;
       return this.http.get<Inscrito[]>(url);

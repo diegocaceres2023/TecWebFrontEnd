@@ -1,14 +1,41 @@
-<body>
+<table mat-table [dataSource]="notas" class="mat-elevation-z8">
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre Completo </th>
+      <td mat-cell *matCellDef="let est"> {{est.estudiante.nombre_completo}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="evaluacion">
+      <th mat-header-cell *matHeaderCellDef> Evaluación </th>
+      <td mat-cell *matCellDef="let est"> {{est.evaluacion}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="nota">
+      <th mat-header-cell *matHeaderCellDef> Nota </th>
+      <td mat-cell *matCellDef="let est"> {{est.calificacion}} </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="gestion">
+      <th mat-header-cell *matHeaderCellDef>Gestión</th>
+      <td mat-cell *matCellDef="let est"> {{est.gestion}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+<!--<body>
     <div class="notas">
         <h1>REGISTRO DE EVALUACIÓN CONTINUA </h1>
         <table>
             <thead>
             <tr>
                 <th>Estudiante</th>
-                <!--<th>Sigla Materia</th>-->
+                <!--<th>Sigla Materia</th>
                 <th>Evaluación</th>
                 <th>Nota</th>
-                <!--<th>Fecha</th>-->
+                <!--<th>Fecha</th>
                 <th>Gestión</th>
             </tr>
                 
@@ -16,15 +43,15 @@
             <tbody>
                 <tr *ngFor="let item of notas">
                     <td>{{item.estudiante.nombre_completo}}</td>
-                    <!--<td>{{item.materia.}}</td>-->
+                    <!--<td>{{item.materia.}}</td>
                     <td>{{item.evaluacion}}</td>
                     <td>{{item.calificacion}}</td>
-                    <!--<td>{{item.fecha}}</td>-->
+                    <!--<td>{{item.fecha}}</td>
                     <td>{{item.gestion}}</td>
 
                 </tr>
             </tbody>
         </table>
     </div>
-    </body>
+    </body>-->
     

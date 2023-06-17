@@ -51,6 +51,6 @@ export class NewEstudianteComponent {
     .crear(estudiante)
     .subscribe();//this.nuevo = data
 
-    this.dialogRef.close({ data: this.nuevo })
+    this.dialogRef.close({ data: true })
   }
 }

@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class NotasComponent {
   notas : Nota[] = [];
   id: string | null ='';
+  displayedColumns: string[] = [ 'nombre', 'evaluacion', 'nota','gestion'];
   constructor(private notasService: NotaService,private route: ActivatedRoute){
     
   }

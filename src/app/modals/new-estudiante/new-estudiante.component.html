@@ -1,9 +1,10 @@
+<body>
+
 <div class="container">
-    <div [hidden]="isSubmitted">
       <h1>Nuevo Estudiante</h1>   
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
       
-         <mat-form-field appearance="fill" class="full-width">
+         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Nombre</mat-label>
             <input required matInput formControlName="nombre">
             <mat-error class="error" *ngIf="isSubmitted && myForm.get('nombre')!.invalid">
@@ -11,7 +12,7 @@
             </mat-error>
           </mat-form-field>
           <br>
-          <mat-form-field appearance="fill" class="full-width">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Celular</mat-label>
             <input type="number" required matInput formControlName="celular">
             <mat-error class="error" *ngIf="isSubmitted && myForm.get('celular')!.invalid">
@@ -19,7 +20,7 @@
             </mat-error>
           </mat-form-field>
           <br>
-          <mat-form-field appearance="fill" class="full-width">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Fecha de Nacimiento</mat-label>
             <input matInput required [matDatepicker]="picker" formControlName="fecha">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -29,6 +30,8 @@
             </mat-error>
           </mat-form-field>
           <button mat-raised-button color="primary" type="submit" class="margin">Guardar</button>  
+          <button mat-raised-button color="warn">Cancelar</button>
       <!--<button mat-raised-button color="primary" type="submit" >Send</button>-->
     </form>
-  </div>
+  </div>  
+</body> 

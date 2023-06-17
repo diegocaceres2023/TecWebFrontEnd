@@ -68,34 +68,6 @@ export class AppComponent {
         }
       ]
     },
-    
-    /*{
-      displayName: 'Expedientes',
-      iconName: 'description',          
-      children: [
-        {
-          displayName: 'Mis Expedientes',
-          iconName: 'how_to_reg',
-          route: '/misexpedientes'
-        },
-        { 
-          displayName: 'Todos',
-          iconName: 'waves',
-          route: '/todos'
-        }
-      ]
-    },
-    {
-      displayName: 'Perfiles',
-      iconName: 'group',
-      children: [
-          {
-            displayName: 'Búsqueda Perfil',
-            iconName: 'search',
-            route: '/busquedaperfiles'
-          }
-        ]
-      }*/
   ];
   mobileQuery: MediaQueryList;
   selectedIndex: number =-1;
@@ -103,7 +75,7 @@ export class AppComponent {
   message:any = null;
   private _mobileQueryListener: () => void;
   
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private  dialog:  MatDialog) {
+  constructor(changeDetectorRef: ChangeDetectorRef,private router: Router, media: MediaMatcher,private  dialog:  MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -126,12 +98,23 @@ export class AppComponent {
       const dialogRef = this.dialog.open(NewEstudianteComponent, {
         width: '400px'
       });
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          this.router.navigate(['/estudiantes'])
+        }
+      });
     }
     else if(name === "materia"){
       const dialogRef = this.dialog.open(NewMateriaComponent, {
         width: '400px'
       });
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          this.router.navigate(['/materias'])
+        }
+      });
     }
+    
   }
   ngOnInit(): void {
     //this.requestPermission();

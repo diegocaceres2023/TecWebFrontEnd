@@ -1,59 +1,32 @@
+<body>
 <div class="container">
-  <div>
     <h1>Nueva Materia</h1> 
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     
-       <mat-form-field appearance="fill" class="full-width">
+       <mat-form-field appearance="outline" class="full-width">
           <mat-label>Sigla</mat-label>
           <input required matInput formControlName="sigla">
           <mat-error class="error" *ngIf="isSubmitted && myForm.get('sigla')!.invalid">
             Este campo es <strong>obligatorio</strong>
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Materia</mat-label>
           <input required matInput formControlName="nombre">
           <mat-error class="error" *ngIf="isSubmitted && myForm.get('nombre')!.invalid">
             Este campo es <strong>obligatorio</strong>
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Descripcion</mat-label>
           <input required matInput formControlName="descripcion">
           <mat-error class="error" *ngIf="isSubmitted && myForm.get('descripcion')!.invalid">
             Este campo es <strong>obligatorio</strong>
           </mat-error>
         </mat-form-field>
-        <br>
-    <!--<div>
-      
-      <label>
-        Sigla:
-        <input formControlName="sigla" placeholder="Sigla">
-      </label>
-      <div *ngIf="myForm.get('sigla')!.invalid && (myForm.get('sigla')!.dirty || myForm.get('sigla')!.touched)">
-        Este campo es obligatorio.
-      </div>
-    </div>
-    <div>
-      <label>
-        Nombre de la materia:
-        <input formControlName="nombre" placeholder="materia">
-      </label>
-      <div *ngIf="myForm.get('nombre')!.invalid && (myForm.get('nombre')!.dirty || myForm.get('nombre')!.touched)">
-        Este campo es obligatorio.
-      </div>
-    </div>
-    
-    <div>
-        <label>
-          Departamento:
-          <input formControlName="descripcion" placeholder="descripcion">
-        </label>
-        <div *ngIf="myForm.get('descripcion')!.invalid && (myForm.get('descripcion')!.dirty || myForm.get('descripcion')!.touched)">
-            Este campo es obligatorio.
-          </div>
-      </div>-->
-    <button mat-raised-button color="primary" type="submit" >Send</button>
+   
+        <button mat-raised-button color="primary" type="submit" class="margin">Guardar</button>  
+        <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancelar</button>
   </form>
 </div>
+</body>

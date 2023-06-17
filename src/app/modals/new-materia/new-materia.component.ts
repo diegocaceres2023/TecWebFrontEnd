@@ -48,6 +48,6 @@ export class NewMateriaComponent implements OnInit{
     .crear(materia)
     .subscribe();//this.nuevo = data
 
-    this.dialogRef.close({ data: this.nuevo })
+    this.dialogRef.close({ data: true })
   }
 }

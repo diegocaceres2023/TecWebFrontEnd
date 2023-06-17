@@ -9,7 +9,7 @@ export class MateriaService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'https://tec-web-backend.vercel.app/materias'
+  url = 'http://localhost:3000/materias'
   obtenerDatos(){
     return this.http.get<Materia[]>(this.url);
   }

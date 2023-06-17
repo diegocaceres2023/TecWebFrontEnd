@@ -9,7 +9,7 @@ export class NotaService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'https://tec-web-backend.vercel.app/notas'
+  url = 'http://localhost:3000/notas'
   obtenerDatos(idMateria:string){
     let url = this.url + "/materia/" + idMateria;
     return this.http.get<Nota[]>(url);
