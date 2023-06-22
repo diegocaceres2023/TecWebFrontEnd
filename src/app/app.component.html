@@ -37,14 +37,14 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <span *ngFor="let child of item.children" >
-                <mat-list-item *ngIf="isModal(child.route!)" (click)="changeTitle(child.displayName); snav.toggle(); openModal(child.route!)" >
+                <mat-list-item *ngIf="isModal(child.route!) && toDisplay(child.acceso!)" (click)="changeTitle(child.displayName); snav.toggle(); openModal(child.route!)" >
                   <!-- Entradas de cada submenú  -->
                   <div class="item-menu"> 
                     <mat-icon>{{child.iconName}}</mat-icon>
                     <span>{{child.displayName}} </span>
                   </div>
                 </mat-list-item>
-                <mat-list-item *ngIf="!isModal(child.route!)" (click)="changeTitle(child.displayName); snav.toggle()" routerLink="{{[child.route]}}">
+                <mat-list-item *ngIf="!isModal(child.route!) && toDisplay(child.acceso!)" (click)="changeTitle(child.displayName); snav.toggle()" routerLink="{{[child.route]}}">
                   <!-- Entradas de cada submenú  -->
                   <div class="item-menu"> 
                     <mat-icon>{{child.iconName}}</mat-icon>

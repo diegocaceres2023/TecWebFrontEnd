@@ -10,6 +10,7 @@ import { Materia } from 'src/app/interfaces/materia';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { InscribirService } from 'src/app/servicios/inscribir.service';
 import { MateriaService } from 'src/app/servicios/materia.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inscribir',
@@ -136,7 +137,14 @@ export class InscribirComponent implements OnInit{
         return throwError('Something went wrong; please try again later.'); // Optional: Rethrow the error or return a custom error message
       })
     )
-     .subscribe(data => console.log(data))
+     .subscribe(data =>{
+      Swal.fire({
+        icon: 'success',
+        title: 'Se ha guardado correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
+       console.log(data)})
      this.notNumber = false;
     }
   }

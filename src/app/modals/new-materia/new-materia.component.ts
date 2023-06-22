@@ -8,6 +8,7 @@ import { catchError, throwError } from 'rxjs';
 import { Estudiante } from 'src/app/interfaces/estudiante';
 import { Materia } from 'src/app/interfaces/materia';
 import { MateriaService } from 'src/app/servicios/materia.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-materia',
@@ -59,8 +60,15 @@ export class NewMateriaComponent implements OnInit{
         return throwError('Something went wrong; please try again later.'); // Optional: Rethrow the error or return a custom error message
       })
     )
-    .subscribe(data=>
+    .subscribe(data=>{
+      Swal.fire({
+        icon: 'success',
+        title: 'Se ha guardado correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
       this.dialogRef.close({ data: true })
+    }
     );//this.nuevo = data
 
     

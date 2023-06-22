@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Materia } from '../interfaces/materia';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { RefreshService } from './refresh.service';
 @Injectable({
   providedIn: 'root'
 })
 export class MateriaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private refreshService: RefreshService) { }
 
   url = 'https://backend-final-production-3ac8.up.railway.app/materias'
   obtenerDatos(){
@@ -24,6 +25,10 @@ export class MateriaService {
         //Authorization: 'my-auth-token'
       })
     };
-    return this.http.post<Materia>(this.url, materia, httpOptions)
+    return this.http.post<Materia>(this.url, materia, httpOptions).pipe(
+      tap(() => {
+        this.refreshService.refresh();
+      })
+    );
   }
 }

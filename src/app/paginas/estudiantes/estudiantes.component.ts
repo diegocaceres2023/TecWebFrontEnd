@@ -5,6 +5,8 @@ import {MatDialog, MatDialogRef, MatDialogModule} from '@angular/material/dialog
 import { ConfirmarComponent } from 'src/app/modals/confirmar/confirmar.component';
 import { NewEstudianteComponent } from 'src/app/modals/new-estudiante/new-estudiante.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RefreshService } from 'src/app/servicios/refresh.service';
 
 @Component({
   selector: 'app-estudiantes',
@@ -14,9 +16,9 @@ import { MatTableDataSource } from '@angular/material/table';
 export class EstudiantesComponent {
   data =  new MatTableDataSource<Estudiante>();
   estudiantes : Estudiante[] = []
-  displayedColumns: string[] = [ 'nombre', 'celular', 'fecha', 'edit','delete','notas'];
+  displayedColumns: string[] = [ 'nombre', 'celular', 'fecha', 'edit','delete'/*,'notas'*/];
 
-  constructor(private estudianteService: EstudianteService, public dialog: MatDialog){
+  constructor(private refreshService: RefreshService, private _snackBar: MatSnackBar,private estudianteService: EstudianteService, public dialog: MatDialog){
     
   }
   openDialog(estudiante:Estudiante): void {
@@ -25,6 +27,7 @@ export class EstudiantesComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
       if(result){
         this.borrarEstudiante(estudiante)
       }
@@ -32,9 +35,10 @@ export class EstudiantesComponent {
    
   }
   ngOnInit(): void {
-    console.log(new Date())
     this.obtenerEstudiantes();
-    
+    this.refreshService.getRefreshObservable().subscribe(() => {
+      this.obtenerEstudiantes();
+    });
   }
 
   obtenerEstudiantes(){
@@ -57,7 +61,9 @@ export class EstudiantesComponent {
     .subscribe(() => {
       this.estudiantes = this.estudiantes.filter(est => est.carnet !== estudiante.carnet);
     }, error => {
-      console.log('Error deleting object:', error);
+      this._snackBar.open("Ha ocurrido un problema. El estudiante está inscrito en materias", "Cerrar", {
+        panelClass: ['red-snackbar'],
+      });
     });
   }
 
@@ -72,5 +78,17 @@ export class EstudiantesComponent {
         console.log(result.data)
       }
     });
+  }
+
+  openOnEdit(est: Estudiante){
+      const dialogRef = this.dialog.open(NewEstudianteComponent, {
+        width: '400px',
+        data: {estudiante: est}
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          
+        }
+      });
   }
 }

@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Nota } from '../interfaces/nota';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { RefreshService } from './refresh.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private refreshService: RefreshService) { }
 
   url = 'https://backend-final-production-3ac8.up.railway.app/notas'
   obtenerDatos(idMateria:string){
@@ -25,6 +26,10 @@ export class NotaService {
         //Authorization: 'my-auth-token'
       })
     };
-    return this.http.post<Nota>(this.url, nota, httpOptions)
+    return this.http.post<Nota>(this.url, nota, httpOptions).pipe(
+      tap(() => {
+        this.refreshService.refresh();
+      })
+    );
   }
 }

@@ -9,6 +9,7 @@ import { NavItem } from './nav-item';
 import { NewEstudianteComponent } from './modals/new-estudiante/new-estudiante.component';
 import { NewMateriaComponent } from './modals/new-materia/new-materia.component';
 import { TokenService } from './servicios/token.service';
+import { RefreshService } from './servicios/refresh.service';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,8 @@ export class AppComponent {
         { 
           displayName: 'Nueva Materia',
           iconName: 'add_circle',
-          route: 'materia'
+          route: 'materia',
+          acceso: 'admin'
         }
       ]
       //route: '/materias',
@@ -82,13 +84,16 @@ export class AppComponent {
   mobileQuery: MediaQueryList;
   selectedIndex: number =-1;
   title = 'La-Jatata';
-  nombreUsuario : string | null;
+  nombreUsuario! : string | null;
   message:any = null;
   private _mobileQueryListener: () => void;
   isLogin! : boolean;
   
-  constructor(private tokenService:TokenService, changeDetectorRef: ChangeDetectorRef,private router: Router, media: MediaMatcher,private  dialog:  MatDialog) {
-    this.nombreUsuario = this.tokenService.getNombreUsuario();
+  constructor(private refreshService: RefreshService,private tokenService:TokenService, changeDetectorRef: ChangeDetectorRef,private router: Router, media: MediaMatcher,private  dialog:  MatDialog) {
+    this.getNombreUsuario()
+    this.refreshService.getRefreshObservable().subscribe(() => {
+      this.getNombreUsuario();
+    });
     //this.tokenService.getIdUsuario();
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -102,6 +107,10 @@ export class AppComponent {
         }
       }
     });
+  }
+
+  getNombreUsuario(){
+    this.nombreUsuario = this.tokenService.getNombreUsuario();
   }
   /*showForm(){
     const ref =this.dialog.open(ReservaModalComponent)

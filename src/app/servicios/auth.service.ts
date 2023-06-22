@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginUsuarioDto } from '../modelos/login-usuario.dto';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { NuevoUsuarioDto } from '../modelos/nuevo-usuario.dto';
 import { TokenDto } from '../modelos/token.dto';
+import { RefreshService } from './refresh.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
 
   login(dto: LoginUsuarioDto): Observable<any>{
-    return this.httpClient.post<any>(this.authURL + 'login', dto);
+    return this.httpClient.post<any>(this.authURL + 'login', dto)
   }
 
   registro(dto:NuevoUsuarioDto): Observable<any>{

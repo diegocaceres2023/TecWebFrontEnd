@@ -8,6 +8,7 @@ import { Estudiante } from 'src/app/interfaces/estudiante';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NewNotaComponent } from 'src/app/modales/new-nota/new-nota.component';
+import { RefreshService } from 'src/app/servicios/refresh.service';
 @Component({
   selector: 'app-notas',
   templateUrl: './notas.component.html',
@@ -22,7 +23,7 @@ export class NotasComponent {
   idUser!: number | null;
   idEstudiante!: number | null;
 
-  constructor(private  dialog:  MatDialog, private estudianteService:EstudianteService, private tokenService: TokenService,private notasService: NotaService,private route: ActivatedRoute){
+  constructor(private refreshService: RefreshService,private  dialog:  MatDialog, private estudianteService:EstudianteService, private tokenService: TokenService,private notasService: NotaService,private route: ActivatedRoute){
     
   }
   async ngOnInit(): Promise<void> {
@@ -36,6 +37,9 @@ export class NotasComponent {
     
     if(this.isAdmin){
       this.obtenerEstudiantes();
+      this.refreshService.getRefreshObservable().subscribe(() => {
+        this.obtenerDatosEstudiante();
+      });
       /*this.notasService.obtenerDatos(this.id!).subscribe(
         (data) => this.notas = data,
         error => console.log(error),
@@ -67,6 +71,11 @@ export class NotasComponent {
   handleSelectChange(event: any) {
     //const selectedValue = event.value;
     this.idEstudiante = event;
+    this.obtenerDatosEstudiante()
+    console.log('Event:', event);
+  }
+
+  obtenerDatosEstudiante(){
     this.notasService.obtenerDatosEstudiante(parseInt(this.id!), this.idEstudiante!).subscribe(
       (data) => {
         console.log(data);
@@ -74,8 +83,6 @@ export class NotasComponent {
       error => console.log(error),
       () => console.log("FIN")
     )
-    console.log('Event:', event);
-     
   }
 
   openModal(){

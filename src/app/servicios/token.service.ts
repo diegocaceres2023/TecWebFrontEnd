@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { async } from 'rxjs';
+import { RefreshService } from './refresh.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private refreshService: RefreshService) { }
 
   isLogged(): boolean{
     if(this.getToken()){
@@ -18,6 +19,9 @@ export class TokenService {
   
   setToken(token: string):void{
     localStorage.setItem('token',token)
+    
+    this.refreshService.refresh();
+    
   }
 
   getToken(): string {

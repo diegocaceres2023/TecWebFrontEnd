@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, throwError } from 'rxjs';
 import { Nota } from 'src/app/interfaces/nota';
 import { NotaService } from 'src/app/servicios/nota.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-nota',
@@ -64,8 +65,14 @@ export class NewNotaComponent {
         return throwError('Something went wrong; please try again later.'); // Optional: Rethrow the error or return a custom error message
       })
     )
-    .subscribe(data=>
-      this.dialogRef.close({ data: data })
+    .subscribe(data=>{
+      Swal.fire({
+        icon: 'success',
+        title: 'Se ha guardado correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.dialogRef.close({ data: data })}
     );//this.nuevo = data
 
     

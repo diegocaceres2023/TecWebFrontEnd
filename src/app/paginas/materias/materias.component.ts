@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Materia } from 'src/app/interfaces/materia';
 import { NewMateriaComponent } from 'src/app/modals/new-materia/new-materia.component';
 import { MateriaService } from 'src/app/servicios/materia.service';
+import { RefreshService } from 'src/app/servicios/refresh.service';
 import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class MateriasComponent implements OnInit{
   isAdmin!: boolean;
   idUser!: number | null;
 
-  constructor(private tokenService: TokenService, private materiaService: MateriaService,private router: Router,public dialog: MatDialog){
+  constructor(private refreshService: RefreshService,private tokenService: TokenService, private materiaService: MateriaService,private router: Router,public dialog: MatDialog){
 
   }
   async ngOnInit(): Promise<void> {
@@ -24,21 +25,34 @@ export class MateriasComponent implements OnInit{
     if(!this.isAdmin){this.idUser = await this.tokenService.getIdUsuario()}
     
     if(this.isAdmin){
-      this.materiaService.obtenerDatos().subscribe(
-        (data) => this.materias = data,
-        error => console.log(error),
-        () => console.log("FIN")
-      )
+      this.obtenerDatos();
+      this.refreshService.getRefreshObservable().subscribe(() => {
+        this.obtenerDatos();
+      });
     }
     else if(this.idUser){
-      this.materiaService.obtenerDatosEstudiante(this.idUser).subscribe(
-        (data) => this.materias = data,
-        error => console.log(error),
-        () => console.log("FIN")
-      )
+      this.obtenerDatosEstudiante();
+      /*this.refreshService.getRefreshObservable().subscribe(() => {
+        this.obtenerDatosEstudiante();
+      });*/
     }
   }
 
+  obtenerDatos(){
+    this.materiaService.obtenerDatos().subscribe(
+      (data) => this.materias = data,
+      error => console.log(error),
+      () => console.log("FIN")
+    )
+  }
+
+  obtenerDatosEstudiante(){
+    this.materiaService.obtenerDatosEstudiante(this.idUser!).subscribe(
+      (data) => this.materias = data,
+      error => console.log(error),
+      () => console.log("FIN")
+    )
+  }
   navigate(id:number) {
     this.router.navigate(['/notas', id]);
   }

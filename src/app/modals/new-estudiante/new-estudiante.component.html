@@ -32,7 +32,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Fecha de Nacimiento</mat-label>
-            <input matInput required [matDatepicker]="picker" formControlName="fecha">
+            <input  matInput required [matDatepicker]="picker" formControlName="fecha">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error class="error" *ngIf="isSubmitted && myForm.get('fecha')!.invalid">
@@ -40,7 +40,7 @@
             </mat-error>
           </mat-form-field>
           <button mat-raised-button color="primary" type="submit" class="margin">Guardar</button>  
-          <button mat-raised-button color="warn">Cancelar</button>
+          <button mat-raised-button color="warn" [mat-dialog-close]>Cancelar</button>
       <!--<button mat-raised-button color="primary" type="submit" >Send</button>-->
     </form>
   </div>
