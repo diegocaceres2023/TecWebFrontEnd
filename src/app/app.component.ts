@@ -2,12 +2,13 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { queue } from 'rxjs';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { NavItem } from './nav-item';
 import { NewEstudianteComponent } from './modals/new-estudiante/new-estudiante.component';
 import { NewMateriaComponent } from './modals/new-materia/new-materia.component';
+import { TokenService } from './servicios/token.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { NewMateriaComponent } from './modals/new-materia/new-materia.component'
 })
 export class AppComponent {
   //title = 'estudiantes-frontend';
-  header:string = 'La Jatata'
+  header:string = '';
+  idUsuario = -1;
   menu: NavItem [] = [
     /*{
       displayName: 'Inicio',
@@ -26,6 +28,7 @@ export class AppComponent {
     {
       displayName: 'Materias',
       iconName: 'menu_book',
+      acceso: 'estudiante',
       children: [
         {
           displayName: 'Ver Materias',
@@ -43,6 +46,7 @@ export class AppComponent {
     {
       displayName: 'Estudiantes',
       iconName: 'person',
+      acceso: 'docente',
       children: [
         {
           displayName: 'Ver Estudiantes',
@@ -60,6 +64,7 @@ export class AppComponent {
     {
       displayName: 'Inscripcion',
       iconName: 'folder',
+      acceso: 'admin',
       children: [
         {
           displayName: 'Nueva Inscripción',
@@ -68,17 +73,35 @@ export class AppComponent {
         }
       ]
     },
+    {
+      displayName: 'Cerrar Sesión',
+      iconName: 'logout',
+      route: 'logout'
+    }
   ];
   mobileQuery: MediaQueryList;
   selectedIndex: number =-1;
   title = 'La-Jatata';
+  nombreUsuario : string | null;
   message:any = null;
   private _mobileQueryListener: () => void;
+  isLogin! : boolean;
   
-  constructor(changeDetectorRef: ChangeDetectorRef,private router: Router, media: MediaMatcher,private  dialog:  MatDialog) {
+  constructor(private tokenService:TokenService, changeDetectorRef: ChangeDetectorRef,private router: Router, media: MediaMatcher,private  dialog:  MatDialog) {
+    this.nombreUsuario = this.tokenService.getNombreUsuario();
+    //this.tokenService.getIdUsuario();
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/login') {
+          this.isLogin= true;
+        } else {
+          this.isLogin= false;
+        }
+      }
+    });
   }
   /*showForm(){
     const ref =this.dialog.open(ReservaModalComponent)
@@ -123,5 +146,21 @@ export class AppComponent {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-  
+  logout(route: string){
+    if(route === "logout"){
+      this.tokenService.logout();
+      this.router.navigate(["/login"]);
+    }
+  }
+
+  toDisplay(acceso: string): boolean{
+    let res = true;
+    if(acceso === "admin" && !this.tokenService.isAdmin()){
+      res = false;
+    }
+    if(acceso === "docente" && !this.tokenService.isAdmin()){
+      res = false;
+    }
+    return res;
+  }
 }

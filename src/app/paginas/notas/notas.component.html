@@ -1,8 +1,21 @@
+<div class="select" *ngIf="isAdmin">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Estudiante</mat-label>
+    <mat-select (valueChange)="handleSelectChange($event)">
+      <mat-option *ngFor="let est of estudiantes" [value]="est.carnet">
+        {{est.nombre_completo}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="button" *ngIf="idEstudiante">
+  <button (click)="openModal()" mat-raised-button color="primary" class="full-width">Agregar nota</button>
+</div>
 <table mat-table [dataSource]="notas" class="mat-elevation-z8">
-    <ng-container matColumnDef="nombre">
+    <!--<ng-container matColumnDef="nombre" *ngIf="!idUser">
       <th mat-header-cell *matHeaderCellDef> Nombre Completo </th>
       <td mat-cell *matCellDef="let est"> {{est.estudiante.nombre_completo}} </td>
-    </ng-container>
+    </ng-container>-->
   
     <!-- Weight Column -->
     <ng-container matColumnDef="evaluacion">

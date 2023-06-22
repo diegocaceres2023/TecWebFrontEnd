@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Materia } from 'src/app/interfaces/materia';
 import { NewMateriaComponent } from 'src/app/modals/new-materia/new-materia.component';
 import { MateriaService } from 'src/app/servicios/materia.service';
+import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
   selector: 'app-materias',
@@ -12,15 +13,30 @@ import { MateriaService } from 'src/app/servicios/materia.service';
 })
 export class MateriasComponent implements OnInit{
   materias : Materia[] = [];
-  constructor(private materiaService: MateriaService,private router: Router,public dialog: MatDialog){
+  isAdmin!: boolean;
+  idUser!: number | null;
+
+  constructor(private tokenService: TokenService, private materiaService: MateriaService,private router: Router,public dialog: MatDialog){
 
   }
-  ngOnInit(): void {
-    this.materiaService.obtenerDatos().subscribe(
-      (data) => this.materias = data,
-      error => console.log(error),
-      () => console.log("FIN")
-    )
+  async ngOnInit(): Promise<void> {
+    this.isAdmin = this.tokenService.isAdmin();
+    if(!this.isAdmin){this.idUser = await this.tokenService.getIdUsuario()}
+    
+    if(this.isAdmin){
+      this.materiaService.obtenerDatos().subscribe(
+        (data) => this.materias = data,
+        error => console.log(error),
+        () => console.log("FIN")
+      )
+    }
+    else if(this.idUser){
+      this.materiaService.obtenerDatosEstudiante(this.idUser).subscribe(
+        (data) => this.materias = data,
+        error => console.log(error),
+        () => console.log("FIN")
+      )
+    }
   }
 
   navigate(id:number) {

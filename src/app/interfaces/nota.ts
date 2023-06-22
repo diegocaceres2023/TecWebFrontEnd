@@ -2,12 +2,12 @@ import { Estudiante } from "./estudiante";
 import { Materia } from "./materia";
 
 export interface Nota {
-    //carnet_estudiante: string;
-    //sigla_materia: string;
+    carnet: number;
+    id_materia: number;
     evaluacion:string;
     calificacion: number;
     //fecha: Date;
     gestion: string;
-    materia: Materia;
-    estudiante: Estudiante;
+    materia?: Materia;
+    estudiante?: Estudiante;
 }

@@ -1,0 +1,31 @@
+<body>
+    
+
+
+    <div class="login-box">
+    <div class="container">
+          <h1>Iniciar Sesión</h1>   
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+          
+             <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Usuario</mat-label>
+                <input required matInput formControlName="nombreUsuario">
+                <mat-error class="error" *ngIf="isSubmitted && myForm.get('nombreUsuario')!.invalid">
+                  Este campo es <strong>obligatorio</strong>
+                </mat-error>
+              </mat-form-field>
+              
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Contraseña</mat-label>
+                <input required type="password" matInput formControlName="password">
+                <mat-error class="error" *ngIf="isSubmitted && myForm.get('password')!.invalid">
+                  Este campo es <strong>obligatorio</strong>
+                </mat-error>
+              </mat-form-field>
+              <button mat-raised-button color="primary" type="submit" class="full-width login-button">Guardar</button>  
+          <!--<button mat-raised-button color="primary" type="submit" >Send</button>-->
+        </form>
+      </div>  
+    </div>  
+
+</body>

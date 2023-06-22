@@ -9,11 +9,14 @@ export class MateriaService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'http://localhost:3000/materias'
+  url = 'https://backend-final-production-3ac8.up.railway.app/materias'
   obtenerDatos(){
     return this.http.get<Materia[]>(this.url);
   }
 
+  obtenerDatosEstudiante(idEstudiante: number){
+    return this.http.get<Materia[]>(this.url + "/estudiante/" + idEstudiante);
+  }
   crear (materia: Materia) : Observable<Materia>{
     const httpOptions = {
       headers: new HttpHeaders({

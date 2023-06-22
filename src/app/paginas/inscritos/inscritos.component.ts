@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class InscritosComponent {
 
   inscritos : Inscrito[] = [];
-  displayedColumns: string[] = [ 'nombre', 'celular', 'fecha','notas'];
+  displayedColumns: string[] = [ 'nombre', 'celular', 'fecha',/*'notas'*/];
   id: string | null ='';
   nombreMateria: string = ''; // Variable para almacenar el nombre de la materia
   nombreCOMPLETO: string = ''; // Variable para juntar el nombre con la sigla

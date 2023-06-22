@@ -19,7 +19,7 @@ export class InscribirService {
     obtenerDatos(){
       return this.http.get<Inscrito[]>(this.url);
     }*/
-    url = 'http://localhost:3000/inscripciones'
+    url = 'https://backend-final-production-3ac8.up.railway.app/inscripciones'
     obtenerDatos(idMateria:string){
       let url = this.url + "/materia/" + idMateria;
       return this.http.get<Inscrito[]>(url);

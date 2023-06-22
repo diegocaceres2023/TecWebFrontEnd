@@ -1,24 +1,35 @@
 <body>
     <div class="container">
-        <div>
           <h1>Nuevo Estudiante</h1> 
       <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
           
-             <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Carnet</mat-label>
-                <input required matInput formControlName="carnet">
+             <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Estudiante</mat-label>
+                <input required [matAutocomplete]="auto" matInput formControlName="carnet">  
+                <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayFn.bind(this)"> <!--[displayWith]="displayFn.bind(this)"-->
+                  <mat-option *ngFor="let est of estudiantesFiltro | async" [value]="est.carnet">
+                    <span>{{est.nombre_completo}}</span> |
+                    <small>CI: {{est.carnet}}</small>
+                  </mat-option>
+                </mat-autocomplete>            
                 <mat-error class="error" *ngIf="isSubmitted && myForm.get('carnet')!.invalid">
                   Este campo es <strong>obligatorio</strong>
                 </mat-error>
               </mat-form-field>
-              <mat-form-field appearance="fill" class="full-width">
-                <mat-label>IdMateria</mat-label>
-                <input type="number" required matInput formControlName="id_materia">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Materia</mat-label>
+                <input [matAutocomplete]="mat" required matInput formControlName="id_materia"> <!--type="number"-->
+                <mat-autocomplete #mat="matAutocomplete"  [displayWith]="displayMat.bind(this)"> <!--[displayWith]="displayFn.bind(this)"-->
+                  <mat-option *ngFor="let mat of materiasFiltro | async" [value]="mat.id">
+                    <span>{{mat.nombre}}</span> |
+                    <small>Sigla: {{mat.sigla}}</small>
+                  </mat-option>
+                </mat-autocomplete>
                 <mat-error class="error" *ngIf="isSubmitted && myForm.get('id_materia')!.invalid">
                   Este campo es <strong>obligatorio</strong>
                 </mat-error>
               </mat-form-field>
-              <mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Fecha de Inscripcion</mat-label>
                 <input matInput required [matDatepicker]="picker" formControlName="fecha_inscripcion">
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -31,49 +42,9 @@
    
               <br>
           
-          <button mat-raised-button color="primary" type="submit" >Send</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid" >Send</button>
         </form>
       </div>
-      <p class="mensaje" *ngIf="successful">Subido exitosamente</p>
-      <!--
-    <h1>INSCRIPCIÓN DE ESTUDIANTES</h1>
-    <form class="box">
-        <label for="Estudiante">Estudiante: </label>
-        <input type="text" id="Estudiante" name="Estudiante" required>
-
-        <label for="Estudiante"> Carnet-estudiante: </label>
-        <input type="text" id="Carnet-estudiante" name="Carnet-estudiante" required>
-
-        <label for="SIGLA-materia"> SIGLA-materia: </label>
-        <input type="text" id="SIGLA-materia" name="SIGLA-materia" required>
-
-        <label for="FECHA-inscripcion"> Fecha de inscripcion: </label>
-        <input type="date" id="FECHA-inscripcion" name="FECHA-inscripcion" required>
-
-        <script>
-            // Función para obtener la fecha actual
-            function mostrarFechaActual() {
-                var fechaActual = new Date();
-                
-                // Obtener los componentes de la fecha (día, mes, año)
-                var dia = fechaActual.getDate();
-                var mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, así que se suma 1
-                var anio = fechaActual.getFullYear();
-                
-                // Formatear la fecha en el formato deseado (por ejemplo, DD/MM/AAAA)
-                var fechaFormateada = dia + '/' + mes + '/' + anio;
-                
-                // Insertar la fecha en el elemento HTML con el id "fechaActual"
-                document.getElementById("fechaActual").innerHTML = fechaFormateada;
-            }
-        </script>
-        
-        <h2>Fecha actual: <span id="fechaActual">Cargando fecha...</span></h2>
-        <script>
-            // Llamar a la función mostrarFechaActual cuando se cargue la página
-            window.onload = mostrarFechaActual;
-        </script>
-
-        <input class="enviarDato" type="submit" value="Enviar">
-    </form>
-</body>-->
+      <mat-error class="error" *ngIf="notNumber"><strong> Debe seleccionar una de las opciones en los campos*</strong></mat-error>
+</body>
+     

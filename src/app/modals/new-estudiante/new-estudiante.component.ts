@@ -25,6 +25,7 @@ export class NewEstudianteComponent {
     this.myForm = this.fb.group({
       nombre: ['', Validators.required],
       celular: ['', [Validators.required]],
+      email: ['',[Validators.required, Validators.email]],
       fecha: ['', [Validators.required]]
     });
   }
@@ -39,6 +40,7 @@ export class NewEstudianteComponent {
       let estudiante: Estudiante;
       estudiante = {
         nombre_completo: this.myForm.value.nombre,
+        email: this.myForm.value.email,
         celular: this.myForm.value.celular,
         fecha_nacimiento: date}
      this.crearMateria(estudiante)

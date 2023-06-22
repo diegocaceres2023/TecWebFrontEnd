@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, throwError } from 'rxjs';
 import { Estudiante } from 'src/app/interfaces/estudiante';
 import { Materia } from 'src/app/interfaces/materia';
 import { MateriaService } from 'src/app/servicios/materia.service';
@@ -16,7 +19,7 @@ export class NewMateriaComponent implements OnInit{
   nuevo! : Materia;
   isSubmitted = false;
   
-  constructor(private fb: FormBuilder, private materiaService:MateriaService,@Inject(MAT_DIALOG_DATA) public data: string,
+  constructor(private _snackBar: MatSnackBar,private fb: FormBuilder, private materiaService:MateriaService,@Inject(MAT_DIALOG_DATA) public data: string,
   private dialogRef: MatDialogRef<NewMateriaComponent>) {
     
   }
@@ -46,8 +49,20 @@ export class NewMateriaComponent implements OnInit{
     this.nuevo = materia;
     this.materiaService
     .crear(materia)
-    .subscribe();//this.nuevo = data
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        // Handle the error here
+        console.error('An error occurred:', error);
+        this._snackBar.open("Ha ocurrido un problema. Verifique que la sigla no sea repetida", "Cerrar", {
+          panelClass: ['red-snackbar'],
+        });
+        return throwError('Something went wrong; please try again later.'); // Optional: Rethrow the error or return a custom error message
+      })
+    )
+    .subscribe(data=>
+      this.dialogRef.close({ data: true })
+    );//this.nuevo = data
 
-    this.dialogRef.close({ data: true })
+    
   }
 }

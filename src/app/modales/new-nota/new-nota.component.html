@@ -1,0 +1,38 @@
+<body>
+    <div class="container">
+        <h1>Nueva Materia</h1> 
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        
+           <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Gestion</mat-label>
+              <input required matInput formControlName="gestion">
+              <mat-error class="error" *ngIf="isSubmitted && myForm.get('gestion')!.invalid">
+                Este campo es <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Evaluación</mat-label>
+              <input required matInput formControlName="evaluacion">
+              <mat-error class="error" *ngIf="isSubmitted && myForm.get('evaluacion')!.invalid">
+                Este campo es <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Calificacion</mat-label>
+              <input type="number" required matInput formControlName="calificacion">
+              <mat-error class="error" *ngIf="myForm.get('calificacion')!.hasError('min')">
+                El valor debe ser positivo
+              </mat-error>
+              <mat-error class="error" *ngIf="myForm.get('calificacion')!.hasError('max')">
+                El valor no puede ser arriba de 100
+              </mat-error>
+              <mat-error class="error" *ngIf="isSubmitted && myForm.get('calificacion')!.invalid">
+                Este campo es <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+       
+            <button mat-raised-button color="primary" type="submit" class="margin">Guardar</button>  
+            <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancelar</button>
+      </form>
+    </div>
+    </body>

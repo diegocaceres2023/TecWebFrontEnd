@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+
+.component-background {
+    background-image: url('https://img.freepik.com/free-photo/front-view-stacked-books-graduation-cap-diploma-education-day_23-2149241011.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh;
+  width: 100vw;
+  }
+
+  div{
+    margin-top: 50px;
+  }
+img{
+    background-image: url('https://img.freepik.com/free-photo/front-view-stacked-books-graduation-cap-diploma-education-day_23-2149241011.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+h1{
+    text-align: center;
+    font-family: 'Yeseva One', cursive;
+    font-size: 100px;
+    margin-top: 60px;
+    color: #021a35;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+}
+
+@media (max-width: 920px) {
+    h1 {
+      font-size: 80px; /* Set each item to occupy 50% of the available space */
+    }
+  }
+
+  @media (max-width: 620px) {
+    h1 {
+      font-size: 60px; /* Set each item to occupy 100% of the available space */
+    }
+  }

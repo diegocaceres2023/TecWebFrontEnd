@@ -1,5 +1,6 @@
 <body>
 
+
 <div class="container">
       <h1>Nuevo Estudiante</h1>   
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
@@ -11,7 +12,7 @@
               Este campo es <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>
-          <br>
+          
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Celular</mat-label>
             <input type="number" required matInput formControlName="celular">
@@ -19,7 +20,16 @@
               Este campo es <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>
-          <br>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input type="email" required matInput formControlName="email">
+            <mat-error *ngIf="myForm.get('email')!.hasError('email')">
+              Por favor colocar un email valido
+            </mat-error>
+            <mat-error class="error" *ngIf="isSubmitted && myForm.get('email')!.invalid">
+              Este campo es <strong>obligatorio</strong>
+            </mat-error>
+          </mat-form-field>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Fecha de Nacimiento</mat-label>
             <input matInput required [matDatepicker]="picker" formControlName="fecha">
@@ -33,5 +43,6 @@
           <button mat-raised-button color="warn">Cancelar</button>
       <!--<button mat-raised-button color="primary" type="submit" >Send</button>-->
     </form>
-  </div>  
+  </div>
+
 </body> 

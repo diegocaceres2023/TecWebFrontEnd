@@ -6,14 +6,14 @@
 </mat-toolbar>
 
 <router-outlet></router-outlet>-->
-<div
+<div *ngIf="!isLogin"
   class="example-container"
   [class.example-is-mobile]="mobileQuery.matches">
   <div style="text-align: left">
     <div class="container">
       <mat-toolbar color="primary" class="example-toolbar" id="myTopnav">
         <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-        <h1 class="example-app-name">{{header}}</h1> 
+        <h1 class="example-app-name">Hola, {{nombreUsuario}}</h1> 
       </mat-toolbar>
     </div>
   </div>
@@ -24,7 +24,7 @@
                [fixedInViewport]="mobileQuery.matches" fixedTopGap="56"> <!--[mode]="mobileQuery.matches ? 'over' : 'side'"-->
     <mat-nav-list>
       <span *ngFor="let item of menu;let i=index"  >
-        <span *ngIf="item.children && item.children.length > 0">
+        <span *ngIf="item.children && item.children.length > 0 && toDisplay(item.acceso!)">
           <mat-accordion>
             <mat-expansion-panel>
               <mat-expansion-panel-header>
@@ -57,7 +57,7 @@
         </span>
         <span *ngIf="!item.children || item.children.length === 0">
           <mat-list-item (click)="select(i)" 
-          [ngClass]="{'active': selectedIndex == i, 'list-group-item': true}" (click)="changeTitle(item.displayName)" routerLink="{{[item.route]}}">
+          [ngClass]="{'active': selectedIndex == i, 'list-group-item': true}" (click)="logout(item.route!)"> <!--routerLink="{{[item.route]}}-->
             <!-- Entradas principales -->
             <div fxLayout="row" fxLayoutAlign="space-between center">
               <mat-icon>{{item.iconName}}</mat-icon>
@@ -72,4 +72,7 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+</div>
+<div *ngIf="isLogin">
+  <router-outlet></router-outlet>
 </div>

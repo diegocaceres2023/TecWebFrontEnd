@@ -15,6 +15,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EstudiantesComponent } from './paginas/estudiantes/estudiantes.component';
 import {HttpClientModule} from '@angular/common/http';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { NotasComponent } from './paginas/notas/notas.component';
 import { InscribirComponent } from './paginas/inscribir/inscribir.component';
 import { ConfirmarComponent } from './modals/confirmar/confirmar.component';
@@ -26,6 +27,17 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { InscritosComponent } from './paginas/inscritos/inscritos.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { LoginComponent } from './paginas/login/login.component';
+import { MenuComponent } from './menu/menu/menu.component';
+import { CarouselModule } from '@coreui/angular';
+
+import { interceptorProvider } from './interceptors/materia.interceptor';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { HomeComponent } from './paginas/home/home.component';
+import {MatSelectModule} from '@angular/material/select';
+import { NewNotaComponent } from './modales/new-nota/new-nota.component';
+
 
 @NgModule({
   declarations: [
@@ -37,16 +49,25 @@ import {MatListModule} from '@angular/material/list';
     ConfirmarComponent,
     NewMateriaComponent,
     NewEstudianteComponent,
-    InscritosComponent
+    InscritosComponent,
+    LoginComponent,
+    MenuComponent,
+    HomeComponent,
+    NewNotaComponent
   ],
   imports: [
     BrowserModule,
+    MatSelectModule,
     ReactiveFormsModule,
+    CarouselModule,
+    MatSnackBarModule, 
     AppRoutingModule,
+    MatAutocompleteModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
     MatSidenavModule,
     MatToolbarModule,
+    ToastrModule.forRoot(),
     MatIconModule,
     MatExpansionModule,
     MatInputModule,
@@ -56,7 +77,7 @@ import {MatListModule} from '@angular/material/list';
     MatButtonModule,
     MatTableModule,MatDialogModule, HttpClientModule
   ],
-  providers: [],
+  providers: [interceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,7 +10,7 @@ export class EstudianteService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'http://localhost:3000/estudiantes'
+  url = 'https://backend-final-production-3ac8.up.railway.app/estudiantes'
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

@@ -33,12 +33,16 @@ export class EstudiantesComponent {
   }
   ngOnInit(): void {
     console.log(new Date())
+    this.obtenerEstudiantes();
+    
+  }
+
+  obtenerEstudiantes(){
     this.estudianteService.obtenerDatos().subscribe(
       (data) => this.estudiantes = data,
       error => console.log(error),
       () => console.log("FIN")
     )
-    
   }
 
   crearEstudiante(estudiante:Estudiante){
